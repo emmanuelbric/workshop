@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "365798177598",
+    "project_id": "workshop-2b549",
+    "storage_bucket": "workshop-2b549.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365798177598:android:809ce1bf68f66cb8de0a6f",
+        "android_client_info": {
+          "package_name": "com.example.workshop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPJz3p5hGHlgEOsVDbCbwTfI33zGdVhUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
