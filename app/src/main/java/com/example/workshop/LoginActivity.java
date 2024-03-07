@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText emailField, passwordField;
 
+    ProgressBar progressBarView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         emailField = findViewById(R.id.et_login_email);
         passwordField = findViewById(R.id.et_login_password);
         loginButton = findViewById(R.id.login_button);
+        progressBarView = findViewById(R.id.progressBar3);
 
 
         goToRegistration.setOnClickListener(new View.OnClickListener(){
@@ -53,25 +57,49 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailField.getText().toString().trim();
                 String password = passwordField.getText().toString().trim();
 
+                validatefields(email,password);
+
+                progressBarView.setVisibility(View.VISIBLE);
+                loginButton.setEnabled(false);
+
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                progressBarView.setVisibility(View.INVISIBLE);
+                                loginButton.setEnabled(true);
+
                                 if (task.isSuccessful())
                                 {
                                     Snackbar snackbar = Snackbar
                                             .make(v,"Welcome :)", Snackbar.LENGTH_SHORT);
                                     snackbar.show();
+                                    Intent j = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(j);
                                 } else
                                 {
                                     Snackbar snackbar = Snackbar
                                             .make(v,task.getException().getMessage()+":(", Snackbar.LENGTH_SHORT);
                                     snackbar.show();
+
                                 }
                             }
                         });
             }
         });
+    }
+    void validatefields(String email, String password)
+    {
+        if(email.isEmpty())
+        {
+            emailField.setError("This field is compulsory");
+            return;
+        }
+        if(password.isEmpty())
+        {
+            passwordField.setError("This field is compulsory");
+            return;
+        }
     }
 }
